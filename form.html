@@ -1,533 +1,475 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Альфа-Бизнес</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Закрытие счёта | Альфа-Бизнес</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
       --primary-color: #dc3545;
+      --secondary-color: #007bff;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
       --sidebar-bg: #ffffff;
-      --table-bg: #f9f9f9;
-      --text-color: #333;
-      --border-color: #eaeaea;
-      --hover-bg: #f1f1f1;
-      --accent-color: #007bff;
+      --text-color: #212529;
+      --border-color: #dee2e6;
+      --hover-bg: #f8f9fa;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f5f5;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background-color: #f8f9fa;
       color: var(--text-color);
+      line-height: 1.6;
     }
+
     .container {
       display: flex;
       min-height: 100vh;
     }
-    /* Sidebar */
+
+    /* Боковая панель */
     .sidebar {
       width: 240px;
-      background-color: var(--sidebar-bg);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      background: var(--sidebar-bg);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
       position: fixed;
-      top: 0;
-      left: 0;
       height: 100%;
       overflow-y: auto;
-      transition: all 0.3s ease;
     }
+
     .sidebar-header {
-      padding: 20px;
+      padding: 1.5rem;
       border-bottom: 1px solid var(--border-color);
     }
+
     .logo {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: bold;
-      font-size: 16px;
+      gap: 12px;
+      font-size: 1.1rem;
+      color: var(--primary-color);
     }
-    .logo img {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background-color: var(--primary-color);
-      color: white;
-      text-align: center;
-      line-height: 30px;
+
+    .logo i {
+      font-size: 1.8rem;
     }
+
     .sidebar-nav ul {
       list-style: none;
       padding: 1rem;
     }
-    .sidebar-nav li {
-      margin-bottom: 0.75rem;
-    }
+
     .sidebar-nav a {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 14px;
+      padding: 0.75rem;
       text-decoration: none;
       color: var(--text-color);
-      font-size: 0.95rem;
-      transition: color 0.3s ease;
-      padding: 0.5rem;
-      border-radius: 6px;
+      border-radius: 8px;
+      transition: var(--transition);
     }
+
     .sidebar-nav a:hover,
     .sidebar-nav a.active {
-      background-color: var(--hover-bg);
-      color: var(--accent-color);
+      background: var(--hover-bg);
+      transform: translateX(4px);
     }
+
     .sidebar-nav i {
-      font-size: 16px;
-      color: #888;
+      width: 24px;
+      text-align: center;
     }
-    /* Main Content */
+
+    /* Основной контент */
     .main-content {
       margin-left: 240px;
-      padding: 1.5rem;
+      padding: 2rem;
       width: calc(100% - 240px);
     }
-    .header {
+
+    /* Шапка страницы */
+    .page-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .header h1 {
-      font-size: 1.75rem;
-      font-weight: 600;
-      margin: 0;
-    }
-    .header button {
-      padding: 0.6rem 1.2rem;
-      background-color: var(--primary-color);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .header button:hover {
-      background-color: #c82333;
-    }
-    /* Top Menu */
-    .top-menu {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .top-menu .search {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .top-menu .search input {
-      padding: 0.5rem;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      font-size: 0.9rem;
-    }
-    .top-menu .user-profile {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .top-menu .user-profile img {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background-color: #ccc;
-    }
-    .top-menu .user-profile span {
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-    .top-menu .notifications {
-      position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .top-menu .notifications .badge {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      width: 16px;
-      height: 16px;
-      background-color: red;
-      color: white;
-      font-size: 0.7rem;
-      font-weight: bold;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    /* Account Details */
-    .account-details {
-      background-color: #f9f9f9;
-      border-radius: 8px;
+      margin-bottom: 2rem;
+      background: white;
       padding: 1.5rem;
-      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
-    .account-details h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      position: relative;
-    }
-    .settings-dropdown-btn {
-      background: transparent;
-      border: none;
-      font-size: 1.1rem;
-      color: #666;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-    .settings-dropdown-btn:hover {
-      color: #333;
-    }
-    .settings-dropdown {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      background-color: white;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      z-index: 10;
-      display: none;
-      min-width: 160px;
-      margin-top: 5px;
-    }
-    .settings-dropdown.show {
-      display: block;
-    }
-    .settings-dropdown ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .settings-dropdown ul li {
-      padding: 0.6rem 1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .settings-dropdown ul li:hover {
-      background-color: #f1f1f1;
-    }
-    .account-details p {
-      font-size: 1.2rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-    .account-details .balance {
-      font-size: 2.5rem;
-      font-weight: 600;
+
+    .page-header h1 {
+      font-size: 1.8rem;
       color: var(--primary-color);
-      margin-bottom: 1rem;
-    }
-    .account-details .details {
       display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .account-details .detail-item {
-      flex: 1 1 200px;
-      display: flex;
-      flex-direction: column;
-    }
-    .account-details .detail-item label {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #666;
-      margin-bottom: 0.5rem;
-    }
-    .account-details .detail-item span {
-      font-size: 1rem;
-      font-weight: 600;
-    }
-    /* Transaction History */
-    .transaction-history {
-      background-color: white;
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .transaction-history h3 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-    .transaction-history .date-range {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .transaction-history .date-range input {
-      padding: 0.6rem 1rem;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      font-size: 0.95rem;
-    }
-    .transaction-history table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 1rem;
-      border-bottom: 1px solid var(--border-color);
-      white-space: nowrap;
-    }
-    th {
-      background-color: #fafafa;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      color: #555;
-    }
-    tr:hover {
-      background-color: var(--hover-bg);
-    }
-    /* Actions */
-    .actions {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .profile-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Форма закрытия счёта */
+    .close-account-form {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .warning-banner {
+      background: #fff3cd;
+      border-left: 4px solid var(--warning-color);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 8px;
+      display: flex;
       gap: 1rem;
     }
-    .actions span {
-      font-size: 0.9rem;
+
+    .warning-icon {
+      color: var(--warning-color);
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .warning-banner h3 {
+      margin-bottom: 0.5rem;
+      color: #856404;
+    }
+
+    .warning-banner ul {
+      padding-left: 1.5rem;
       color: #666;
     }
-    .actions button {
-      padding: 0.5rem 1rem;
-      background-color: #e9ecef;
-      color: #333;
+
+    .warning-banner li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* Элементы формы */
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      color: #495057;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      transition: var(--transition);
+      font-size: 1rem;
+    }
+
+    .form-control:focus {
+      border-color: var(--secondary-color);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+    }
+
+    .form-hint {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: #6c757d;
+    }
+
+    /* Чекбокс подтверждения */
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 2rem 0;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .checkbox-container input {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary-color);
+    }
+
+    /* Кнопки */
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
+      font-weight: 500;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-size: 0.9rem;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
     }
-    .actions button:hover {
-      background-color: #d6d8db;
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
     }
+
+    .btn-primary:hover {
+      background: #c82333;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .btn-secondary {
+      background: #e9ecef;
+      color: #495057;
+    }
+
+    .btn-secondary:hover {
+      background: #dee2e6;
+      transform: translateY(-1px);
+    }
+
+    /* Модальное окно */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 400px;
+      animation: modalSlide 0.3s ease-out;
+    }
+
+    .modal-content i {
+      font-size: 3rem;
+      color: var(--success-color);
+      margin-bottom: 1rem;
+    }
+
+    .modal-content h3 {
+      margin-bottom: 1rem;
+    }
+
+    @keyframes modalSlide {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Адаптивность */
     @media (max-width: 768px) {
       .sidebar {
         width: 100%;
-        height: auto;
         position: relative;
-        flex-shrink: 0;
+        height: auto;
       }
+
       .main-content {
         margin-left: 0;
         width: 100%;
         padding: 1rem;
       }
-      .header {
+
+      .page-header {
         flex-direction: column;
         align-items: flex-start;
+        gap: 1rem;
       }
-      .top-menu {
+
+      .form-actions {
         flex-direction: column;
-        gap: 0.5rem;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="sidebar-header">
-      <div class="logo">
-        <img src="https://via.placeholder.com/30" alt="Logo" />
-        <span>Альфа-Бизнес</span>
-      </div>
-    </div>
-    <nav class="sidebar-nav">
-      <ul>
-        <li><a href="#"><i class="fas fa-tasks"></i> Лента операций</a></li>
-        <li><a href="#"><i class="fas fa-plus-circle"></i> Новый платёж</a></li>
-        <li><a href="#"><i class="fas fa-money-bill-wave"></i> Платежи в работе</a></li>
-        <li><a href="#"><i class="fas fa-file-import"></i> Импорт реестров</a></li>
-        <li><a href="#" class="active"><i class="fas fa-book"></i> Счета</a></li>
-        <li><a href="#"><i class="fas fa-credit-card"></i> Кредитные продукты</a></li>
-        <li><a href="#"><i class="fas fa-university"></i> Депозиты</a></li>
-        <li><a href="#"><i class="fas fa-credit-card"></i> Карты</a></li>
-        <li><a href="#"><i class="fas fa-hand-holding-usd"></i> Банковская гарантия</a></li>
-        <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> Заказ наличных</a></li>
-        <li><a href="#"><i class="fas fa-chart-line"></i> Лизинг на технику</a></li>
-      </ul>
-    </nav>
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content">
-    <!-- Top Menu -->
-    <div class="top-menu">
-      <div class="search">
-        <input type="text" placeholder="Поиск" />
-      </div>
-      <div class="notifications">
-        <i class="fas fa-bell"></i>
-        <span class="badge">1</span>
-      </div>
-      <div class="user-profile">
-        <img src="https://via.placeholder.com/30" alt="User Profile" />
-        <span>ООО "АНАЛИТИК РЕСЕЧ ГРУП"</span>
-      </div>
-      <div class="settings">
-        <i class="fas fa-cog"></i>
-      </div>
-    </div>
-
-    <div class="header">
-      <h1>Мой рублёвый счёт</h1>
-      <button>Открыть счёт</button>
-    </div>
-
-    <!-- Account Details -->
-    <div class="account-details">
-      <h2>
-        Основная информация
-        <button class="settings-dropdown-btn" onclick="toggleDropdown(event)">
-          <i class="fas fa-cog"></i>
-        </button>
-        <div id="dropdownMenu" class="settings-dropdown">
-          <ul>
-            <li onclick="renameAccount()">
-              <i class="fas fa-check-square"></i> Переименовать счёт
-            </li>
-            <li onclick="closeAccount()">
-              <i class="fas fa-times"></i> Закрыть счёт
-            </li>
-          </ul>
-        </div>
-      </h2>
-      <p>Текущий баланс:</p>
-      <div class="balance">2 359.61 ₽</div>
-      <div class="details">
-        <div class="detail-item">
-          <label>Номер счёта:</label>
-          <span>40702 810 8 3200 0006550</span>
-        </div>
-        <div class="detail-item">
-          <label>Дата открытия:</label>
-          <span>2023-01-15</span>
-        </div>
-        <div class="detail-item">
-          <label>Статус:</label>
-          <span>Активен</span>
+  <div class="container">
+    <!-- Боковая панель -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i class="fas fa-university"></i>
+          <span>Альфа-Бизнес</span>
         </div>
       </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="#" class="active"><i class="fas fa-book"></i>Мои счета</a></li>
+          <li><a href="#"><i class="fas fa-plus-circle"></i>Открыть счёт</a></li>
+          <li><a href="#"><i class="fas fa-file-invoice"></i>Платежи</a></li>
+          <li><a href="#"><i class="fas fa-chart-line"></i>Аналитика</a></li>
+          <li><a href="#"><i class="fas fa-cog"></i>Настройки</a></li>
+        </ul>
+      </nav>
     </div>
 
-    <!-- Transaction History -->
-    <div class="transaction-history">
-      <h3>История операций</h3>
-      <div class="date-range">
-        <input type="date" />
-        <input type="date" />
+    <!-- Основной контент -->
+    <div class="main-content">
+      <div class="page-header">
+        <h1><i class="fas fa-exclamation-triangle"></i> Закрытие счёта</h1>
+        <div class="user-profile">
+          <img src="https://via.placeholder.com/40" alt="Профиль" class="profile-img">
+          <span>ООО "АНАЛИТИК РЕСЕЧ ГРУП"</span>
+        </div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Дата</th>
-            <th>Описание</th>
-            <th>Сумма</th>
-            <th>Баланс</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>2023-09-15</td>
-            <td>Пополнение счёта</td>
-            <td>+50 000.00 ₽</td>
-            <td>52 359.61 ₽</td>
-          </tr>
-          <tr>
-            <td>2023-09-14</td>
-            <td>Перевод на другой счёт</td>
-            <td>-2 000.00 ₽</td>
-            <td>2 359.61 ₽</td>
-          </tr>
-          <tr>
-            <td>2023-09-13</td>
-            <td>Платеж за услуги связи</td>
-            <td>-500.00 ₽</td>
-            <td>4 359.61 ₽</td>
-          </tr>
-          <tr>
-            <td>2023-09-12</td>
-            <td>Поступление средств</td>
-            <td>+5 000.00 ₽</td>
-            <td>4 859.61 ₽</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
 
-    <!-- Actions -->
-    <div class="actions">
-      <div>
-        <span>Найдено: 4</span>
-      </div>
-      <div>
-        <button>Экспорт данных</button>
-        <button>Настройка фильтров</button>
-      </div>
+      <!-- Форма закрытия счёта -->
+      <form class="close-account-form" id="closeAccountForm">
+        <div class="warning-banner">
+          <i class="fas fa-exclamation-circle warning-icon"></i>
+          <div>
+            <h3>Важная информация!</h3>
+            <p>После закрытия счёта будут недоступны:
+              <ul>
+                <li>Онлайн-банкинг и мобильное приложение</li>
+                <li>История операций за последние 5 лет</li>
+                <li>Автоматические платежи и шаблоны</li>
+                <li>Бонусная программа и кэшбэк</li>
+              </ul>
+            </p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Закрываемый счёт:</label>
+          <input type="text" 
+                class="form-control" 
+                value="Рублёвый счёт ••• 6550" 
+                readonly
+                disabled>
+        </div>
+
+        <div class="form-group">
+          <label>Причина закрытия:</label>
+          <select class="form-control" required>
+            <option value="">— Выберите причину —</option>
+            <option value="no_need">Счёт больше не нужен</option>
+            <option value="service">Не устраивает обслуживание</option>
+            <option value="rates">Высокие комиссии</option>
+            <option value="other">Другая причина</option>
+          </select>
+          <small class="form-hint">Это поможет нам улучшить сервис</small>
+        </div>
+
+        <div class="form-group">
+          <label>Комментарий (необязательно):</label>
+          <textarea class="form-control" 
+                  rows="3"
+                  placeholder="Опишите подробнее причину закрытия..."></textarea>
+        </div>
+
+        <div class="checkbox-container">
+          <input type="checkbox" id="confirm" required>
+          <label for="confirm">Я понимаю последствия и подтверждаю закрытие счёта</label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Вернуться назад
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-lock"></i> Подтвердить закрытие
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
   <script>
-    function toggleDropdown(e) {
-      const dropdown = document.getElementById('dropdownMenu');
-      const isOpen = dropdown.classList.contains('show');
-
-      // Закрываем все меню
-      document.querySelectorAll('.settings-dropdown').forEach(d => d.classList.remove('show'));
-
-      if (!isOpen) {
-        dropdown.classList.add('show');
+    // Обработка отправки формы
+    document.getElementById('closeAccountForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const form = e.target;
+      const confirmCheckbox = form.querySelector('#confirm');
+      
+      if (!confirmCheckbox.checked) {
+        showError('Пожалуйста, подтвердите закрытие счёта');
+        return;
       }
-    }
-
-    document.addEventListener('click', function(e) {
-      const dropdown = document.getElementById('dropdownMenu');
-      const btn = document.querySelector('.settings-dropdown-btn');
-
-      if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
-        dropdown.classList.remove('show');
-      }
+      
+      // Симуляция успешной отправки
+      showSuccessModal();
     });
 
-    function renameAccount() {
-      alert('Функция: Переименовать счёт');
+    // Показать ошибку
+    function showError(message) {
+      const errorEl = document.createElement('div');
+      errorEl.className = 'error-message';
+      errorEl.style.color = 'var(--primary-color)';
+      errorEl.style.marginTop = '0.5rem';
+      errorEl.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+      document.querySelector('.checkbox-container').after(errorEl);
+      
+      // Автоматическое скрытие ошибки
+      setTimeout(() => errorEl.remove(), 5000);
     }
 
-    function closeAccount() {
-      alert('Функция: Закрыть счёт');
+    // Показать модальное окно успеха
+    function showSuccessModal() {
+      const modal = document.createElement('div');
+      modal.innerHTML = `
+        <div class="modal-overlay">
+          <div class="modal-content">
+            <i class="fas fa-check-circle"></i>
+            <h3>Заявка принята!</h3>
+            <p>Мы свяжемся с вами для подтверждения в течение 2 рабочих дней</p>
+            <button class="btn btn-primary" onclick="this.closest('.modal-overlay').remove()">
+              Хорошо
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
     }
   </script>
 </body>
