@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Альфа-Бизнес</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css " />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css "/>
   <style>
     :root {
       --primary-color: #dc3545;
@@ -15,16 +16,19 @@
       --hover-bg: #f1f1f1;
       --accent-color: #007bff;
     }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #f5f5f5;
       color: var(--text-color);
     }
+
     .container {
       display: flex;
       min-height: 100vh;
@@ -42,10 +46,12 @@
       overflow-y: auto;
       transition: all 0.3s ease;
     }
+
     .sidebar-header {
       padding: 20px;
       border-bottom: 1px solid var(--border-color);
     }
+
     .logo {
       display: flex;
       align-items: center;
@@ -53,6 +59,7 @@
       font-weight: bold;
       font-size: 16px;
     }
+
     .logo img {
       width: 30px;
       height: 30px;
@@ -62,13 +69,16 @@
       text-align: center;
       line-height: 30px;
     }
+
     .sidebar-nav ul {
       list-style: none;
       padding: 1rem;
     }
+
     .sidebar-nav li {
       margin-bottom: 0.75rem;
     }
+
     .sidebar-nav a {
       display: flex;
       align-items: center;
@@ -80,11 +90,13 @@
       padding: 0.5rem;
       border-radius: 6px;
     }
+
     .sidebar-nav a:hover,
     .sidebar-nav a.active {
       background-color: var(--hover-bg);
       color: var(--accent-color);
     }
+
     .sidebar-nav i {
       font-size: 16px;
       color: #888;
@@ -97,6 +109,36 @@
       width: calc(100% - 240px);
     }
 
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .header button {
+      padding: 0.6rem 1.2rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .header button:hover {
+      background-color: #c82333;
+    }
+
     /* Top Menu */
     .top-menu {
       display: flex;
@@ -105,38 +147,45 @@
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
+
     .top-menu .search {
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
+
     .top-menu .search input {
       padding: 0.5rem;
       border: 1px solid var(--border-color);
       border-radius: 6px;
       font-size: 0.9rem;
     }
+
     .top-menu .user-profile {
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
+
     .top-menu .user-profile img {
       width: 30px;
       height: 30px;
       border-radius: 50%;
       background-color: #ccc;
     }
+
     .top-menu .user-profile span {
       font-size: 0.9rem;
       font-weight: 500;
     }
+
     .top-menu .notifications {
       position: relative;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
+
     .top-menu .notifications .badge {
       position: absolute;
       top: -5px;
@@ -153,6 +202,73 @@
       align-items: center;
     }
 
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid var(--border-color);
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+    }
+
+    .tab {
+      padding: 0.75rem 1.25rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color 0.3s ease;
+    }
+
+    .tab.active {
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    /* Search & Filters */
+    .search-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .search-bar input {
+      flex: 1 1 200px;
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .search-bar button {
+      padding: 0.6rem 1rem;
+      background-color: #e9ecef;
+      color: #333;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .search-bar button:hover {
+      background-color: #d6d8db;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filters select {
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      background-color: white;
+    }
+
     /* Table */
     .table-container {
       border: 1px solid var(--border-color);
@@ -160,15 +276,18 @@
       overflow-x: auto;
       background-color: white;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
     }
+
     th, td {
       padding: 1rem;
       border-bottom: 1px solid var(--border-color);
       white-space: nowrap;
     }
+
     th {
       background-color: #fafafa;
       font-weight: 600;
@@ -176,33 +295,117 @@
       font-size: 0.85rem;
       color: #555;
     }
+
     tr:hover {
       background-color: var(--hover-bg);
     }
+
     .company-row > td {
       background-color: #f8f9fa;
       font-weight: bold;
-      cursor: pointer;
     }
+
     .sub-row {
       display: none;
     }
+
     .sub-row.show {
       display: table-row;
     }
+
     .sub-row td {
       padding-left: 2rem;
     }
+
     .toggle-icon {
       transition: transform 0.3s ease;
       cursor: pointer;
     }
+
     .toggle-icon.open {
       transform: rotate(90deg);
+    }
+
+    /* Actions */
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .actions span {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .actions button {
+      padding: 0.5rem 1rem;
+      background-color: #e9ecef;
+      color: #333;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .actions button:hover {
+      background-color: #d6d8db;
+    }
+
+    /* Pagination */
+    .pagination {
+      margin-top: 1.5rem;
+      text-align: right;
+    }
+
+    .pagination button {
+      margin-left: 0.3rem;
+      padding: 0.4rem 0.8rem;
+      background-color: #e9ecef;
+      color: #333;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .pagination button:hover {
+      background-color: #d6d8db;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 1rem;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .top-menu {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
     }
   </style>
 </head>
 <body>
+
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-header">
@@ -230,6 +433,7 @@
 
   <!-- Main Content -->
   <div class="main-content">
+
     <!-- Top Menu -->
     <div class="top-menu">
       <div class="search">
@@ -300,10 +504,11 @@
             <td></td>
             <td></td>
           </tr>
+
           <tr class="sub-row">
             <td><input type="checkbox" /></td>
             <td></td>
-            <td>Расчётный счёт</td>
+            <td><a href=schet.html>Расчётный счёт</a></td>
             <td>40702 156 2 3200 0000580</td>
             <td>CNY</td>
             <td>1.00</td>
@@ -408,39 +613,36 @@
       <button>3</button>
       <button>></button>
     </div>
+
   </div>
 
-  <script>
-    document.querySelectorAll('.company-row').forEach(row => {
-      const icon = row.querySelector('.toggle-icon');
-      const rows = [];
-      let nextRow = row.nextElementSibling;
+ <script>
+  document.querySelectorAll('.company-row').forEach(row => {
+    const icon = row.querySelector('.toggle-icon');
+    const rows = [];
+    let nextRow = row.nextElementSibling;
 
-      while (nextRow && nextRow.classList.contains('sub-row')) {
-        rows.push(nextRow);
-        nextRow = nextRow.nextElementSibling;
+    while (nextRow && nextRow.classList.contains('sub-row')) {
+      rows.push(nextRow);
+      nextRow = nextRow.nextElementSibling;
+    }
+
+    row.addEventListener('click', function (e) {
+      if (!e.target.closest('input') && !e.target.closest('i')) {
+        rows.forEach(r => r.classList.toggle('show'));
+        icon.classList.toggle('open');
       }
-
-      // Раскрытие/сворачивание подстрок
-      row.addEventListener('click', function (e) {
-        if (!e.target.closest('input') && !e.target.closest('i')) {
-          rows.forEach(r => r.classList.toggle('show'));
-          icon.classList.toggle('open');
-        }
-      });
-
-      // Переход по schet.html при двойном клике
-      row.addEventListener('dblclick', function () {
-        const firstSubRow = this.nextElementSibling?.classList.contains('sub-row') ? this.nextElementSibling : null;
-        if (!firstSubRow) return;
-
-        const accountNumberCell = firstSubRow.querySelector('td:nth-child(4)');
-        if (!accountNumberCell) return;
-
-        const accountNumber = accountNumberCell.textContent.trim().replace(/\s+/g, '');
-        window.location.href = `schet.html?account=${encodeURIComponent(accountNumber)}`;
-      });
     });
-  </script>
+
+    row.addEventListener('dblclick', function () {
+      const accountNumberCell = this.nextElementSibling?.querySelector('td:nth-child(4)');
+      const accountNumber = accountNumberCell ? accountNumberCell.textContent.trim().replace(/\s+/g, '') : 'unknown';
+      
+      // Перенаправление с номером счёта в URL
+      window.location.href = `schet.html?account=${encodeURIComponent(accountNumber)}`;
+    });
+  });
+</script>
+
 </body>
 </html>
