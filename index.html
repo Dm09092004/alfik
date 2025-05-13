@@ -297,6 +297,7 @@
 
     tr:hover {
       background-color: var(--hover-bg);
+      cursor: pointer;
     }
 
     .company-row > td {
@@ -503,15 +504,14 @@
             <td></td>
             <td></td>
           </tr>
-
-          <tr class="sub-row"><a href="shet.html">
+          <tr class="sub-row">
             <td><input type="checkbox" /></td>
             <td></td>
             <td>Расчётный счёт</td>
             <td>40702 156 2 3200 0000580</td>
             <td>CNY</td>
             <td>1.00</td>
-          </a></tr>
+          </tr>
           <tr class="sub-row">
             <td><input type="checkbox" /></td>
             <td></td>
@@ -568,7 +568,6 @@
             <td>USD</td>
             <td>0.00</td>
           </tr>
-
           <tr class="company-row">
             <td><input type="checkbox" /></td>
             <td>
@@ -616,17 +615,23 @@
   </div>
 
   <script>
+    // Открываем schet.html при клике на строку счёта
+    document.querySelectorAll('tbody tr.sub-row').forEach(row => {
+      row.addEventListener('click', function () {
+        window.location.href = 'schet.html';
+      });
+    });
+
+    // Разворачивание/скрытие строк компании
     document.querySelectorAll('.company-row').forEach(row => {
       row.addEventListener('click', function () {
         const icon = this.querySelector('.toggle-icon');
         const rows = [];
-
         let nextRow = this.nextElementSibling;
         while (nextRow && nextRow.classList.contains('sub-row')) {
           rows.push(nextRow);
           nextRow = nextRow.nextElementSibling;
         }
-
         rows.forEach(r => r.classList.toggle('show'));
         icon.classList.toggle('open');
       });
