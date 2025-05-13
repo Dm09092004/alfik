@@ -616,33 +616,23 @@
 
   </div>
 
- <script>
-  document.querySelectorAll('.company-row').forEach(row => {
-    const icon = row.querySelector('.toggle-icon');
-    const rows = [];
-    let nextRow = row.nextElementSibling;
+  <script>
+    document.querySelectorAll('.company-row').forEach(row => {
+      row.addEventListener('click', function () {
+        const icon = this.querySelector('.toggle-icon');
+        const rows = [];
 
-    while (nextRow && nextRow.classList.contains('sub-row')) {
-      rows.push(nextRow);
-      nextRow = nextRow.nextElementSibling;
-    }
+        let nextRow = this.nextElementSibling;
+        while (nextRow && nextRow.classList.contains('sub-row')) {
+          rows.push(nextRow);
+          nextRow = nextRow.nextElementSibling;
+        }
 
-    row.addEventListener('click', function (e) {
-      if (!e.target.closest('input') && !e.target.closest('i')) {
         rows.forEach(r => r.classList.toggle('show'));
         icon.classList.toggle('open');
-      }
+      });
     });
-
-    row.addEventListener('dblclick', function () {
-      const accountNumberCell = this.nextElementSibling?.querySelector('td:nth-child(4)');
-      const accountNumber = accountNumberCell ? accountNumberCell.textContent.trim().replace(/\s+/g, '') : 'unknown';
-      
-      // Перенаправление с номером счёта в URL
-      window.location.href = `schet.html?account=${encodeURIComponent(accountNumber)}`;
-    });
-  });
-</script>
+  </script>
 
 </body>
 </html>
