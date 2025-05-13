@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Закрытие счёта | Альфа-Бизнес</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #dc3545;
+      --secondary-color: #007bff;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --sidebar-bg: #ffffff;
+      --text-color: #212529;
+      --border-color: #dee2e6;
+      --hover-bg: #f8f9fa;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background-color: #f8f9fa;
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Боковая панель */
+    .sidebar {
+      width: 240px;
+      background: var(--sidebar-bg);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      position: fixed;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+    }
+
+    .logo i {
+      font-size: 1.8rem;
+    }
+
+    .sidebar-nav ul {
+      list-style: none;
+      padding: 1rem;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0.75rem;
+      text-decoration: none;
+      color: var(--text-color);
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+      background: var(--hover-bg);
+      transform: translateX(4px);
+    }
+
+    .sidebar-nav i {
+      width: 24px;
+      text-align: center;
+    }
+
+    /* Основной контент */
+    .main-content {
+      margin-left: 240px;
+      padding: 2rem;
+      width: calc(100% - 240px);
+    }
+
+    /* Шапка страницы */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .page-header h1 {
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .profile-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* Форма закрытия счёта */
+    .close-account-form {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .warning-banner {
+      background: #fff3cd;
+      border-left: 4px solid var(--warning-color);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border-radius: 8px;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .warning-icon {
+      color: var(--warning-color);
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .warning-banner h3 {
+      margin-bottom: 0.5rem;
+      color: #856404;
+    }
+
+    .warning-banner ul {
+      padding-left: 1.5rem;
+      color: #666;
+    }
+
+    .warning-banner li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* Элементы формы */
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+      color: #495057;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      transition: var(--transition);
+      font-size: 1rem;
+    }
+
+    .form-control:focus {
+      border-color: var(--secondary-color);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+    }
+
+    .form-hint {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: #6c757d;
+    }
+
+    /* Чекбокс подтверждения */
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 2rem 0;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .checkbox-container input {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary-color);
+    }
+
+    /* Кнопки */
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #c82333;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .btn-secondary {
+      background: #e9ecef;
+      color: #495057;
+    }
+
+    .btn-secondary:hover {
+      background: #dee2e6;
+      transform: translateY(-1px);
+    }
+
+    /* Модальное окно */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 400px;
+      animation: modalSlide 0.3s ease-out;
+    }
+
+    .modal-content i {
+      font-size: 3rem;
+      color: var(--success-color);
+      margin-bottom: 1rem;
+    }
+
+    .modal-content h3 {
+      margin-bottom: 1rem;
+    }
+
+    @keyframes modalSlide {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+      }
+
+      .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 1rem;
+      }
+
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Боковая панель -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i class="fas fa-university"></i>
+          <span>Альфа-Бизнес</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="#" class="active"><i class="fas fa-book"></i>Мои счета</a></li>
+          <li><a href="#"><i class="fas fa-plus-circle"></i>Открыть счёт</a></li>
+          <li><a href="#"><i class="fas fa-file-invoice"></i>Платежи</a></li>
+          <li><a href="#"><i class="fas fa-chart-line"></i>Аналитика</a></li>
+          <li><a href="#"><i class="fas fa-cog"></i>Настройки</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="main-content">
+      <div class="page-header">
+        <h1><i class="fas fa-exclamation-triangle"></i> Закрытие счёта</h1>
+        <div class="user-profile">
+          <img src="https://via.placeholder.com/40" alt="Профиль" class="profile-img">
+          <span>ООО "АНАЛИТИК РЕСЕЧ ГРУП"</span>
+        </div>
+      </div>
+
+      <!-- Форма закрытия счёта -->
+      <form class="close-account-form" id="closeAccountForm">
+        <div class="warning-banner">
+          <i class="fas fa-exclamation-circle warning-icon"></i>
+          <div>
+            <h3>Важная информация!</h3>
+            <p>После закрытия счёта будут недоступны:
+              <ul>
+                <li>Онлайн-банкинг и мобильное приложение</li>
+                <li>История операций за последние 5 лет</li>
+                <li>Автоматические платежи и шаблоны</li>
+                <li>Бонусная программа и кэшбэк</li>
+              </ul>
+            </p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Закрываемый счёт:</label>
+          <input type="text" 
+                class="form-control" 
+                value="Рублёвый счёт ••• 6550" 
+                readonly
+                disabled>
+        </div>
+
+        <div class="form-group">
+          <label>Причина закрытия:</label>
+          <select class="form-control" required>
+            <option value="">— Выберите причину —</option>
+            <option value="no_need">Счёт больше не нужен</option>
+            <option value="service">Не устраивает обслуживание</option>
+            <option value="rates">Высокие комиссии</option>
+            <option value="other">Другая причина</option>
+          </select>
+          <small class="form-hint">Это поможет нам улучшить сервис</small>
+        </div>
+
+        <div class="form-group">
+          <label>Комментарий (необязательно):</label>
+          <textarea class="form-control" 
+                  rows="3"
+                  placeholder="Опишите подробнее причину закрытия..."></textarea>
+        </div>
+
+        <div class="checkbox-container">
+          <input type="checkbox" id="confirm" required>
+          <label for="confirm">Я понимаю последствия и подтверждаю закрытие счёта</label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Вернуться назад
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-lock"></i> Подтвердить закрытие
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Обработка отправки формы
+    document.getElementById('closeAccountForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const form = e.target;
+      const confirmCheckbox = form.querySelector('#confirm');
+      
+      if (!confirmCheckbox.checked) {
+        showError('Пожалуйста, подтвердите закрытие счёта');
+        return;
+      }
+      
+      // Симуляция успешной отправки
+      showSuccessModal();
+    });
+
+    // Показать ошибку
+    function showError(message) {
+      const errorEl = document.createElement('div');
+      errorEl.className = 'error-message';
+      errorEl.style.color = 'var(--primary-color)';
+      errorEl.style.marginTop = '0.5rem';
+      errorEl.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
+      document.querySelector('.checkbox-container').after(errorEl);
+      
+      // Автоматическое скрытие ошибки
+      setTimeout(() => errorEl.remove(), 5000);
+    }
+
+    // Показать модальное окно успеха
+    function showSuccessModal() {
+      const modal = document.createElement('div');
+      modal.innerHTML = `
+        <div class="modal-overlay">
+          <div class="modal-content">
+            <i class="fas fa-check-circle"></i>
+            <h3>Заявка принята!</h3>
+            <p>Мы свяжемся с вами для подтверждения в течение 2 рабочих дней</p>
+            <button class="btn btn-primary" onclick="this.closest('.modal-overlay').remove()">
+              Хорошо
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+  </script>
+</body>
+</html>
