@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Альфа-Бизнес</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css " />
   <style>
     :root {
       --primary-color: #dc3545;
@@ -333,6 +332,148 @@
     .actions button:hover {
       background-color: #d6d8db;
     }
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .modal {
+      background-color: white;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .modal:hover {
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      transform: scale(1.01);
+    }
+    .modal-header {
+      background-color: #dc2626;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    .modal-header h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .modal-header p {
+      font-size: 1rem;
+    }
+    .modal-body {
+      padding: 1.5rem;
+    }
+    .icon-warning {
+      width: 4rem;
+      height: 4rem;
+      color: #f59e0b;
+      margin: 0 auto 1.5rem;
+    }
+    .message {
+      text-align: center;
+      color: #4b5563;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 1.5rem;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      color: #4b5563;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+    }
+    .cross-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: #ef4444;
+      margin-right: 0.5rem;
+    }
+    .details-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .toggle-button {
+      color: #dc2626;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s ease;
+    }
+    .toggle-button:hover {
+      color: #b91c1c;
+    }
+    .arrow-icon {
+      width: 1rem;
+      height: 1rem;
+      margin-left: 0.25rem;
+      transition: transform 0.2s ease;
+    }
+    .show-details .arrow-icon {
+      transform: rotate(180deg);
+    }
+    .extra-info {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+    .actions-modal {
+      display: flex;
+      gap: 1rem;
+    }
+    .btn-secondary {
+      flex: 1;
+      background-color: #e5e7eb;
+      color: #1f2937;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background-color: #d1d5db;
+    }
+    .btn-danger {
+      flex: 1;
+      background-color: #ef4444;
+      color: white;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-danger:hover {
+      background-color: #dc2626;
+      transform: scale(1.02);
+    }
     @media (max-width: 768px) {
       .sidebar {
         width: 100%;
@@ -357,11 +498,12 @@
   </style>
 </head>
 <body>
+
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-header">
       <div class="logo">
-        <img src="https://via.placeholder.com/30" alt="Logo" />
+        <img src="https://via.placeholder.com/30 " alt="Logo" />
         <span>Альфа-Бизнес</span>
       </div>
     </div>
@@ -384,6 +526,7 @@
 
   <!-- Main Content -->
   <div class="main-content">
+
     <!-- Top Menu -->
     <div class="top-menu">
       <div class="search">
@@ -394,7 +537,7 @@
         <span class="badge">1</span>
       </div>
       <div class="user-profile">
-        <img src="https://via.placeholder.com/30" alt="User Profile" />
+        <img src="https://via.placeholder.com/30 " alt="User Profile" />
         <span>ООО "АНАЛИТИК РЕСЕЧ ГРУП"</span>
       </div>
       <div class="settings">
@@ -419,7 +562,7 @@
             <li onclick="renameAccount()">
               <i class="fas fa-check-square"></i> Переименовать счёт
             </li>
-            <li onclick="closeAccount()">
+            <li onclick="openCloseAccountModal()">
               <i class="fas fa-times"></i> Закрыть счёт
             </li>
           </ul>
@@ -498,16 +641,70 @@
         <button>Настройка фильтров</button>
       </div>
     </div>
+
+    <!-- Modal for Close Account Confirmation -->
+    <div id="closeAccountModal" class="modal-overlay" style="display: none;">
+      <div class="modal">
+        <div class="modal-header">
+          <h1>Ваш счёт важен для нас!</h1>
+          <p>Вы действительно хотите его закрыть?</p>
+        </div>
+        <div class="modal-body">
+          <!-- Warning Icon -->
+          <div class="flex justify-center mb-6">
+            <svg class="icon-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+
+          <!-- Message -->
+          <p class="message">
+            Мы очень ценим вас как клиента и хотим напомнить, что при закрытии счёта вы потеряете:
+          </p>
+
+          <!-- List of consequences -->
+          <ul>
+            <li><svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Доступ к онлайн-банкингу</li>
+            <li><svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Историю операций за последние 5 лет</li>
+            <li><svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Автоматические платежи и подписки</li>
+            <li><svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Привилегии по бонусным программам</li>
+            <li><svg class="cross-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Персональные настройки и шаблоны</li>
+          </ul>
+
+          <!-- Toggle Details -->
+          <div class="details-toggle">
+            <button class="toggle-button" onclick="toggleDetails()">
+              Показать подробности
+              <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+          <div id="extraInfo" class="extra-info">
+            При закрытии счёта все данные будут сохранены в архиве банка согласно законодательству РФ.
+            Восстановление данных возможно только в течение 6 месяцев после закрытия счёта.
+            Некоторые услуги (например, выпуск дубликатов карт) могут быть доступны за дополнительную плату.
+          </div>
+
+          <!-- Actions -->
+          <div class="actions-modal">
+            <button class="btn-secondary" onclick="window.location.href='bonus.html'">Подробнее</button>
+            <button class="btn-danger" onclick="window.location.href='form.html'">Подтвердить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
     function toggleDropdown(e) {
       const dropdown = document.getElementById('dropdownMenu');
       const isOpen = dropdown.classList.contains('show');
-
       // Закрываем все меню
       document.querySelectorAll('.settings-dropdown').forEach(d => d.classList.remove('show'));
-
       if (!isOpen) {
         dropdown.classList.add('show');
       }
@@ -516,7 +713,6 @@
     document.addEventListener('click', function(e) {
       const dropdown = document.getElementById('dropdownMenu');
       const btn = document.querySelector('.settings-dropdown-btn');
-
       if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
         dropdown.classList.remove('show');
       }
@@ -526,17 +722,28 @@
       alert('Функция: Переименовать счёт');
     }
 
-    function closeAccount() {
-      alert('Функция: Закрыть счёт');
+    function openCloseAccountModal() {
+      document.getElementById('closeAccountModal').style.display = 'flex';
     }
-    
-  const urlParams = new URLSearchParams(window.location.search);
-  const accountNumber = urlParams.get('account');
 
-  if (accountNumber) {
-    document.getElementById('account-number').textContent = accountNumber;
-  }
+    function closeCloseAccountModal() {
+      document.getElementById('closeAccountModal').style.display = 'none';
+    }
 
+    function toggleDetails() {
+      const extraInfo = document.getElementById('extraInfo');
+      const btn = document.querySelector('.toggle-button');
+      const isOpen = extraInfo.style.display === 'block';
+
+      if (isOpen) {
+        extraInfo.style.display = 'none';
+        btn.innerHTML = `Показать подробности<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+      } else {
+        extraInfo.style.display = 'block';
+        btn.innerHTML = `Скрыть подробности<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+      }
+    }
   </script>
+
 </body>
 </html>
