@@ -405,16 +405,30 @@
       position: relative; /* Добавлено для позиционирования dropdown */
     }
 
-    .settings-dropdown.show {
-      display: block; /* Отображение меню при активации */
-    }
+    .account-details h2 {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    .settings-dropdown {
-      top: calc(100% + 5px); /* Позиция под заголовком */
-      right: 0;
-      /* Остальные стили остаются прежними */
-    }
-    }
+.settings-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  min-width: 160px;
+}
+
+.settings-dropdown.show {
+  display: block;
+}
+    
   </style>
 </head>
 <body>
@@ -474,6 +488,20 @@
     <div class="account-details">
       <h2>
         Основная информация
+  <button class="settings-dropdown-btn">
+    <i class="fas fa-cog"></i>
+  </button>
+  <div id="dropdownMenu" class="settings-dropdown">
+    <ul>
+      <li onclick="renameAccount()">
+        <i class="fas fa-check-square"></i> Переименовать счёт
+      </li>
+      <li onclick="closeAccount()">
+        <i class="fas fa-times"></i> Закрыть счёт
+      </li>
+    </ul>
+  </div>
+</h2>
         <button class="settings-dropdown-btn" onclick="toggleDropdown(event)">
           <i class="fas fa-cog"></i>
         </button>
@@ -488,6 +516,8 @@
           </ul>
         </div>
       </h2>
+      <h2>
+ 
       <p>Текущий баланс:</p>
       <div class="balance">2 359.61 ₽</div>
       <div class="details">
@@ -565,29 +595,41 @@
   </div>
 
 <script>
-    function toggleDropdown(e) {
-      const btn = e.target.closest('.settings-dropdown-btn');
-      if (!btn) return;
+   function toggleDropdown(e) {
+  const btn = e.target.closest('.settings-dropdown-btn');
+  if (!btn) return;
 
-      const dropdown = document.getElementById('dropdownMenu');
-      const isOpen = dropdown.classList.contains('show');
+  const dropdown = btn.nextElementSibling;
+  const isOpen = dropdown.classList.contains('show');
 
-      // Закрываем все выпадающие меню
-      document.querySelectorAll('.settings-dropdown').forEach(d => d.classList.remove('show'));
+  // Закрываем все выпадающие меню
+  document.querySelectorAll('.settings-dropdown').forEach(d => {
+    if (d !== dropdown) d.classList.remove('show');
+  });
 
-      // Открываем/закрываем текущее меню
-      if (!isOpen) dropdown.classList.add('show');
-    }
+  // Переключаем текущее меню
+  dropdown.classList.toggle('show', !isOpen);
+}
 
-    // Закрытие меню при клике вне его области
-    document.addEventListener('click', function(e) {
-      const dropdown = document.getElementById('dropdownMenu');
-      const btn = document.querySelector('.settings-dropdown-btn');
+// Закрытие меню при клике вне его области
+document.addEventListener('click', function(e) {
+  const dropdown = document.getElementById('dropdownMenu');
+  const btn = document.querySelector('.settings-dropdown-btn');
 
-      if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
-        dropdown.classList.remove('show');
-      }
-    });
+  if (!dropdown.contains(e.target) && !e.target.closest('.settings-dropdown-btn')) {
+    dropdown.classList.remove('show');
+  }
+});
+
+function renameAccount() {
+  alert("Функция переименования счёта");
+  document.getElementById('dropdownMenu').classList.remove('show');
+}
+
+function closeAccount() {
+  alert("Функция закрытия счёта");
+  document.getElementById('dropdownMenu').classList.remove('show');
+}
   </script>
 
 </body>
