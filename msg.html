@@ -1,0 +1,104 @@
+import React from 'react';
+
+export default function App() {
+  const [showDetails, setShowDetails] = React.useState(false);
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="bg-white rounded-xl shadow-lg max-w-md w-full overflow-hidden transform transition-all duration-300 hover:shadow-xl">
+        {/* Header */}
+        <div className="bg-red-600 px-6 py-8 text-white text-center">
+          <h1 className="text-2xl font-bold mb-2">Ваш счёт важен для нас!</h1>
+          <p>Вы действительно хотите его закрыть?</p>
+        </div>
+
+        {/* Body */}
+        <div className="p-6">
+          <div className="flex items-center justify-center mb-6">
+            <svg
+              className="w-16 h-16 text-yellow-500"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+
+          <p className="text-center text-gray-700 mb-6 font-medium">
+            Мы очень ценим вас как клиента и хотим напомнить, что при закрытии счёта вы потеряете:
+          </p>
+
+          <ul className="space-y-2 mb-6">
+            {[
+              "Доступ к онлайн-банкингу",
+              "Историю операций за последние 5 лет",
+              "Автоматические платежи и подписки",
+              "Привилегии по бонусным программам",
+              "Персональные настройки и шаблоны"
+            ].map((item, index) => (
+              <li key={index} className="flex items-center text-sm text-gray-600">
+                <svg
+                  className="w-5 h-5 text-red-500 mr-2"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mb-6 text-center">
+            <button
+              onClick={() => setShowDetails(!showDetails)}
+              className="text-red-600 hover:text-red-800 font-medium focus:outline-none transition-colors duration-200 flex items-center justify-center mx-auto"
+            >
+              {showDetails ? "Скрыть подробности" : "Подробнее о последствиях"}
+              <svg
+                className={`w-4 h-4 ml-1 transition-transform duration-200 ${showDetails ? 'rotate-180' : ''}`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
+            {showDetails && (
+              <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 text-xs text-gray-600">
+                При закрытии счёта все данные будут сохранены в архиве банка согласно законодательству РФ.
+                Восстановление данных возможно только в течение 6 месяцев после закрытия счёта.
+                Некоторые услуги (например, выпуск дубликатов карт) могут быть доступны за дополнительную плату.
+              </div>
+            )}
+          </div>
+
+          {/* Actions */}
+          <div className="flex space-x-4">
+            <button className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50">
+              Подробнее
+            </button>
+            <button className="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md transform hover:scale-[1.02] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+              Подтвердить
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
