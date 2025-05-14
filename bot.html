@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бизнес-помощник | Альфа-Банк</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #EF3124;
+            --secondary-color: #1D1D1B;
+            --bot-bg: #F8F8F8;
+            --user-bg: #EF3124;
+            --text-dark: #1D1D1B;
+            --text-light: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: #FFFFFF;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 20px auto;
+            width: 100%;
+            height: 90vh;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bot-avatar {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bot-status {
+            width: 10px;
+            height: 10px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin-left: auto;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: var(--bot-bg);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 15px;
+            border-radius: 15px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .bot-message {
+            background: white;
+            align-self: flex-start;
+            border: 1px solid #EEE;
+        }
+
+        .user-message {
+            background: var(--user-bg);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .quick-replies {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .quick-reply {
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-reply:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .input-container {
+            padding: 20px;
+            background: white;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #EEE;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #EEE;
+            border-radius: 25px;
+            outline: none;
+        }
+
+        .send-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .send-button:hover {
+            background: #cc2a1f;
+            transform: rotate(90deg);
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 10px;
+            opacity: 0.7;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-dark);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-5px); }
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 0;
+                height: 100vh;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="bot-avatar">
+                <i class="fas fa-robot" style="color: var(--primary-color);"></i>
+            </div>
+            <div>
+                <h2>Бизнес-помощник</h2>
+                <p>Онлайн 24/7</p>
+            </div>
+            <div class="bot-status"></div>
+        </div>
+
+        <div class="chat-messages">
+            <!-- Сообщение бота -->
+            <div class="message bot-message">
+                <p>Здравствуйте! Чем могу помочь вашему бизнесу сегодня?</p>
+                <div class="quick-replies">
+                    <div class="quick-reply">Финансирование</div>
+                    <div class="quick-reply">Юридические вопросы</div>
+                    <div class="quick-reply">Бухгалтерия</div>
+                </div>
+            </div>
+
+            <!-- Индикатор набора -->
+            <div class="typing-indicator">
+                <div class="dot"></div>
+                <div class="dot" style="animation-delay: 0.2s"></div>
+                <div class="dot" style="animation-delay: 0.4s"></div>
+            </div>
+
+            <!-- Сообщение пользователя -->
+            <div class="message user-message">
+                <p>Нужна помощь с кредитованием</p>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <input type="text" class="message-input" placeholder="Напишите сообщение...">
+            <button class="send-button">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Имитация ответов бота
+        function addBotMessage(text, replies) {
+            const messages = document.querySelector('.chat-messages');
+            const typing = document.querySelector('.typing-indicator');
+            
+            // Скрываем индикатор набора
+            typing.style.display = 'none';
+            
+            // Добавляем сообщение
+            const message = document.createElement('div');
+            message.className = 'message bot-message';
+            message.innerHTML = `
+                <p>${text}</p>
+                ${replies ? `<div class="quick-replies">${
+                    replies.map(r => `<div class="quick-reply">${r}</div>`).join('')
+                }</div>` : ''}
+            `;
+            
+            messages.appendChild(message);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        // Обработка быстрых ответов
+        document.querySelectorAll('.quick-reply').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const text = this.innerText;
+                document.querySelector('.message-input').value = text;
+            });
+        });
+
+        // Обработка отправки сообщения
+        document.querySelector('.send-button').addEventListener('click', function() {
+            const input = document.querySelector('.message-input');
+            const text = input.value.trim();
+            
+            if(text) {
+                // Добавляем сообщение пользователя
+                const messages = document.querySelector('.chat-messages');
+                const message = document.createElement('div');
+                message.className = 'message user-message';
+                message.innerHTML = `<p>${text}</p>`;
+                messages.appendChild(message);
+                
+                // Показываем индикатор набора
+                document.querySelector('.typing-indicator').style.display = 'flex';
+                
+                // Имитация ответа бота
+                setTimeout(() => {
+                    addBotMessage('Хорошо, подбираю для вас лучшие варианты...', [
+                        'Кредитование',
+                        'Инвестиции',
+                        'Страхование'
+                    ]);
+                }, 1500);
+                
+                input.value = '';
+                messages.scrollTop = messages.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
