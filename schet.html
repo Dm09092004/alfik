@@ -495,6 +495,28 @@
         gap: 0.5rem;
       }
     }
+    .chat-bot-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.chat-bot-link i {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.chat-bot-link:hover {
+  color: #333;
+}
+
+.chat-bot-link:hover i {
+  transform: scale(1.1);
+}
   </style>
 </head>
 <body>
@@ -527,23 +549,29 @@
   <!-- Main Content -->
   <div class="main-content">
 
-    <!-- Top Menu -->
-    <div class="top-menu">
-      <div class="search">
-        <input type="text" placeholder="Поиск" />
-      </div>
-      <div class="notifications">
-        <i class="fas fa-bell"></i>
-        <span class="badge">1</span>
-      </div>
-      <div class="user-profile">
-        <img src="https://ru.pinterest.com/pin/773985886006799761/" alt="User Profile" />
-        <span>ООО "АНАЛИТИК РЕСЕЧ ГРУП"</span>
-      </div>
-      <div class="settings">
-        <i class="fas fa-cog"></i>
-      </div>
-    </div>
+  <!-- Top Menu -->
+<div class="top-menu">
+  <div class="search">
+    <input type="text" placeholder="Поиск" />
+  </div>
+  <div class="notifications">
+    <i class="fas fa-bell"></i>
+    <span class="badge">1</span>
+  </div>
+  <div class="user-profile">
+    <img src="https://via.placeholder.com/30 " alt="User Profile" />
+    <span>ООО "АНАЛИТИК РЕСЕЧ ГРУП"</span>
+  </div>
+  <div class="settings">
+    <i class="fas fa-cog"></i>
+  </div>
+
+  <!-- Новая кнопка: Чат с ботом -->
+  <a href="bot.html" class="chat-bot-link">
+    <i class="fas fa-robot"></i>
+    <span style="font-size: 0.95rem;">Чат с ботом</span>
+  </a>
+</div>
 
     <div class="header">
       <h1>Мой рублёвый счёт</h1>
