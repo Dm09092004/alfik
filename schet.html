@@ -495,6 +495,25 @@
         gap: 0.5rem;
       }
     }
+    .chat-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  max-width: 800px;
+  width: 100%;
+  height: 90vh;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: white;
+}
+
+.chat-container.hide {
+  display: none;
+}
   </style>
 </head>
 <body>
@@ -543,6 +562,36 @@
       <div class="settings">
         <i class="fas fa-cog"></i>
       </div>
+      <!-- Modal: Чат с ботом -->
+<div id="chatModal" class="chat-container" style="display: none;">
+  <div class="chat-header">
+    <div class="bot-avatar">
+      <i class="fas fa-robot" style="color: var(--primary-color);"></i>
+    </div>
+    <div>
+      <h2>Бизнес-помощник</h2>
+      <p>Онлайн 24/7</p>
+    </div>
+    <div class="bot-status"></div>
+  </div>
+
+  <div class="chat-messages" id="chatMessages">
+    <!-- Сообщение бота -->
+    <div class="message bot-message">
+      <p>Здравствуйте! Чем могу помочь вашему бизнесу сегодня?</p>
+      <div class="quick-replies">
+        <div class="quick-reply">Финансирование</div>
+        <div class="quick-reply">Юридические вопросы</div>
+        <div class="quick-reply">Бухгалтерия</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-container">
+    <input type="text" id="chatInput" class="message-input" placeholder="Напишите сообщение..." />
+    <button class="send-button" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
     </div>
 
     <div class="header">
@@ -743,6 +792,49 @@
         btn.innerHTML = `Скрыть подробности<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
       }
     }
+    <script>
+  function toggleChat() {
+    const chat = document.getElementById('chatModal');
+    chat.classList.toggle('hide');
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const messages = document.getElementById('chatMessages');
+
+    // Сообщение пользователя
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message user-message';
+    userMessage.innerHTML = `<p>${text}</p>`;
+    messages.appendChild(userMessage);
+
+    // Индикатор набора
+    const typing = document.createElement('div');
+    typing.className = 'typing-indicator';
+    typing.innerHTML = `
+      <div class="dot"></div>
+      <div class="dot" style="animation-delay: 0.2s;"></div>
+      <div class="dot" style="animation-delay: 0.4s;"></div>
+    `;
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
+
+    input.value = '';
+
+    setTimeout(() => {
+      typing.style.display = 'none';
+
+      const botReply = document.createElement('div');
+      botReply.className = 'message bot-message';
+      botReply.innerHTML = `<p>Вы написали: "${text}"</p>`;
+      messages.appendChild(botReply);
+      messages.scrollTop = messages.scrollHeight;
+    }, 1500);
+  }
+</script>
   </script>
 
 </body>
