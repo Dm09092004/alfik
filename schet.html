@@ -563,16 +563,11 @@
         <i class="fas fa-cog"></i>
       </div>
       <!-- Modal: Чат с ботом -->
-<div id="chatModal" class="chat-container" style="display: none;">
-  <div class="chat-header">
-    <div class="bot-avatar">
-      <i class="fas fa-robot" style="color: var(--primary-color);"></i>
-    </div>
-    <div>
-      <h2>Бизнес-помощник</h2>
-      <p>Онлайн 24/7</p>
-    </div>
-    <div class="bot-status"></div>
+ <div class="chat-button" onclick="toggleChat()">
+    <i class="fas fa-robot"></i>
+    <span style="font-size: 0.9rem;">Чат с ботом</span>
+  </div>
+</div>
   </div>
 
   <div class="chat-messages" id="chatMessages">
@@ -747,7 +742,36 @@
     </div>
 
   </div>
+<!-- Modal: Чат с ботом -->
+<div id="chatModal" class="chat-container">
+  <div class="chat-header">
+    <div class="bot-avatar">
+      <i class="fas fa-robot" style="color: var(--primary-color);"></i>
+    </div>
+    <div>
+      <h2>Бизнес-помощник</h2>
+      <p>Онлайн 24/7</p>
+    </div>
+    <div class="bot-status"></div>
+  </div>
 
+  <div class="chat-messages" id="chatMessages">
+    <!-- Сообщение бота -->
+    <div class="message bot-message">
+      <p>Здравствуйте! Чем могу помочь вашему бизнесу сегодня?</p>
+      <div class="quick-replies">
+        <div class="quick-reply">Финансирование</div>
+        <div class="quick-reply">Юридические вопросы</div>
+        <div class="quick-reply">Бухгалтерия</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-container">
+    <input type="text" id="chatInput" class="message-input" placeholder="Напишите сообщение...">
+    <button class="send-button" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
   <script>
     function toggleDropdown(e) {
       const dropdown = document.getElementById('dropdownMenu');
